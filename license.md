@@ -1,8 +1,8 @@
 The MIT License (MIT)
 
-Copyright (c) 2015 ITEAD Intelligent Systems Co., Ltd
-Copyright (C) 2015 Embedded and Real-Time Systems Laboratory
-             Graduate School of Information Science, Nagoya Univ., JAPAN
+Copyright (c) 2015 ITEAD Intelligent Systems Co., Ltd  
+Copyright (c) 2015 Embedded and Real-Time Systems Laboratory  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graduate School of Information Science, Nagoya Univ., JAPAN  
 Copyright (c) 2018 Bizan Nishimura
 
 
