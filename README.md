@@ -1,22 +1,20 @@
-@mainpage
-
-# WeeESP8266 updated for Milkcoca SDK
+# WeeESP8266 updated for GR-CITRUS
 
 An ESP8266 library for Arduino providing an easy-to-use way to manipulate ESP8266.
 
-Updated to support Milkcoca SDK <https://github.com/milk-cocoa/Milkcocoa_Arduino_SDK>, 
-Arudino M0 and TOPPERS/R2CA(http://dev.toppers.jp/trac_user/contrib/browser/rtos_arduino).
-
-All samples are tested with Arudino M0 Pro. To execute other Arudino 
-(UNO, Mega..), you have to change sample programs.
+Updated to support GR-CITRUS.
 
 # Source 
-Source can be download at <https://github.com/exshonda/ESP8266_Arduino_AT>.
-Original source can be download at <https://github.com/itead/ITEADLIB_Arduino_WeeESP8266>.
+Source can be download at <https://github.com/lipoyang/WeeESP8266_GR>
+
+1st Original source can be download at <https://github.com/itead/ITEADLIB_Arduino_WeeESP8266>.
+
+2nd Original source can be download at  <https://github.com/exshonda/ESP8266_Arduino_AT>.
+
 
 You can clone it by:
 
-    git clone https://github.com/exshonda/ESP8266_Arduino_AT
+    git clone https://github.com/lipoyang/WeeESP8266_GR
 
 # Documentation
 
