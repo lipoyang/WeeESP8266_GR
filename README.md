@@ -108,6 +108,8 @@ will be useful for Arduino lovers.
 
     int 	dataAvailable(void); : Check data is available.
 
+    bool 	registerUDP(String addr, uint32_t port, uint32_t my_port); : Register UDP port number in single mode.
+
 # Mainboard Requires
 
   - RAM: not less than 2KBytes
@@ -120,6 +122,7 @@ will be useful for Arduino lovers.
   - Arduino M0 and its derivatives
   - [Iteaduino UNO](http://imall.iteadstudio.com/im130312001.html)
   - [WBoard Pro](http://imall.iteadstudio.com/im141125005.html)
+  - GR-CITRUS
 
 # Using SoftwareSerial
 
