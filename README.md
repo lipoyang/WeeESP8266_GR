@@ -183,10 +183,10 @@ The size of data from ESP8266 is too big for arduino sometimes, so the library c
 receive the whole buffer because the size of the hardware serial buffer which is 
 defined in HardwareSerial.h is too small.
 
-UNO or MEGA or WBoard Pro
+UNO or MEGA or WBoard Pro:  
 Open the file from `\arduino\hardware\arduino\avr\cores\arduino\HardwareSerial.h`. 
 
-M0
+M0:  
 Open the file from `\arduino\hardware\arduino\avr\cores\arduino\RingBuffer.h`. 
 See the follow line in the file.
 
@@ -194,6 +194,8 @@ See the follow line in the file.
 
 The default size of the buffer is 64. Change it into a bigger number, like 256 or more.
 
+GR-CITRUS:  
+No problem because the default size of the buffer is 1024 for GR-CITRUS.
 
 The Arduino library delivered by IDE 1.7.7 has memory leak bug. 
 Fix file ./hardware/arduino/samd/cores/arduino/USB/samd21_device.c, line 152.
