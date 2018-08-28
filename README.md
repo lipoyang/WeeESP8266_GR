@@ -21,7 +21,7 @@ You can clone it by:
 Original Online API documentation can be reached at <http://docs.iteadstudio.com/ITEADLIB_Arduino_WeeESP8266/index.html>.
 
 Offline API documentation can be found under directory 
-[doc](https://github.com/exshonda/ESP8266_Arduino_AT/tree/master/doc).
+[doc](https://github.com/lipoyang/WeeESP8266_GR/tree/master/doc).
 
 # How to get started
 
