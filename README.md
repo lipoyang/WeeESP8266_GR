@@ -95,6 +95,8 @@ will be useful for Arduino lovers.
     uint32_t 	recv (uint8_t mux_id, uint8_t *buffer, uint32_t buffer_size, uint32_t timeout=1000) : Receive data from one of TCP or UDP builded already in multiple mode. 
      
     uint32_t 	recv (uint8_t *coming_mux_id, uint8_t *buffer, uint32_t buffer_size, uint32_t timeout=1000) : Receive data from all of TCP or UDP builded already in multiple mode. 
+    
+    bool 	enableClientDHCP(uint8_t mode, boolean enabled) : Enable DHCP for client mode.
 
 # Added API List
 
