@@ -56,6 +56,7 @@ void ESP8266::begin(SoftwareSerial &uart, uint32_t baud)
     m_puart = &uart;
     m_baud = baud;
     m_puart->begin(baud);
+    m_remoteIP = "";
     rx_empty();
 }
 #else
@@ -64,6 +65,7 @@ void ESP8266::begin(HardwareSerial &uart, uint32_t baud)
     m_puart = &uart;
     m_baud = baud;
     m_puart->begin(baud);
+    m_remoteIP = "";
     rx_empty();
 }
 #endif
@@ -198,6 +200,11 @@ String ESP8266::getLocalIP(void)
     return list;
 }
 
+String ESP8266::getRemoteIP(void)
+{
+    return m_remoteIP;
+}
+
 bool ESP8266::enableMUX(void)
 {
     return sATCIPMUX(1);
@@ -283,9 +290,9 @@ bool ESP8266::stopServer(void)
     return stopTCPServer();
 }
 
-bool ESP8266::send(const uint8_t *buffer, uint32_t len)
+bool ESP8266::send(const uint8_t *buffer, uint32_t len, String addr, uint32_t port)
 {
-    return sATCIPSENDSingle(buffer, len);
+    return sATCIPSENDSingle(buffer, len, addr, port);
 }
 
 bool ESP8266::send(uint8_t mux_id, const uint8_t *buffer, uint32_t len)
@@ -328,7 +335,20 @@ int ESP8266::dataAvailable(void)
 {
     return (m_puart->available() > 0)? 1 : 0;
 }
-            
+
+bool ESP8266::sendAT(String command, uint32_t timeout)
+{
+    String data;
+    rx_empty();
+    m_puart->print(command);
+    
+    data = recvString("OK", "ERROR", "FAIL", timeout);
+    if (data.indexOf("OK") != -1) {
+        return true;
+    }
+    return false;
+}
+
 /*----------------------------------------------------------------------------*/
 /* +IPD,<id>,<len>:<data> */
 /* +IPD,<len>:<data> */
@@ -717,11 +737,19 @@ bool ESP8266::sATCIPSTARTMultiple(uint8_t mux_id, String type, String addr, uint
     }
     return false;
 }
-bool ESP8266::sATCIPSENDSingle(const uint8_t *buffer, uint32_t len)
+bool ESP8266::sATCIPSENDSingle(const uint8_t *buffer, uint32_t len, String addr, uint32_t port)
 {
     rx_empty();
     m_puart->print("AT+CIPSEND=");
-    m_puart->println(len);
+    if(addr.compareTo("") == 0){
+        m_puart->println(len);
+    }else{
+        m_puart->print(len);
+        m_puart->print(",");
+        m_puart->print(addr);
+        m_puart->print(",");
+        m_puart->println(port);
+    }
     if (recvFind(">", 5000)) {
         rx_empty();
         for (uint32_t i = 0; i < len; i++) {
