@@ -360,6 +360,8 @@ uint32_t ESP8266::recvPkg(uint8_t *buffer, uint32_t buffer_size, uint32_t *data_
     int32_t index_PIPDcomma = -1;
     int32_t index_colon = -1; /* : */
     int32_t index_comma = -1; /* , */
+    int32_t index_comma2 = -1; /* , */
+    int32_t index_comma3 = -1; /* , */
     int32_t len = -1;
     int8_t id = -1;
     bool has_data = false;
@@ -384,9 +386,19 @@ uint32_t ESP8266::recvPkg(uint8_t *buffer, uint32_t buffer_size, uint32_t *data_
         if (index_PIPDcomma != -1) {
             index_colon = data.indexOf(':', index_PIPDcomma + 5);
             if (index_colon != -1) {
-                index_comma = data.indexOf(',', index_PIPDcomma + 5);
+                
+                index_comma  = data.indexOf(',', index_PIPDcomma + 5);
+                index_comma2 = data.indexOf(',', index_comma + 1);
+                index_comma3 = data.indexOf(',', index_comma2 + 1);
+                /* +IPD,len:data */
+                if (index_comma == -1) { 
+                    len = data.substring(index_PIPDcomma + 5, index_colon).toInt();
+                    if (len <= 0) {
+                        return 0;
+                    }
+                }
                 /* +IPD,id,len:data */
-                if (index_comma != -1 && index_comma < index_colon) { 
+                else if (index_comma2 == -1) {
                     id = data.substring(index_PIPDcomma + 5, index_comma).toInt();
                     if (id < 0 || id > 4) {
                         return 0;
@@ -395,12 +407,28 @@ uint32_t ESP8266::recvPkg(uint8_t *buffer, uint32_t buffer_size, uint32_t *data_
                     if (len <= 0) {
                         return 0;
                     }
-                } else { /* +IPD,len:data */
-                    len = data.substring(index_PIPDcomma + 5, index_colon).toInt();
+                }
+                /* +IPD,len,IP,port:data */
+                else if (index_comma3 == -1) {
+                    len = data.substring(index_PIPDcomma + 5, index_comma).toInt();
                     if (len <= 0) {
                         return 0;
                     }
+                    m_remoteIP = data.substring(index_comma + 1, index_comma2);
                 }
+                /* +IPD,id,len,IP,port:data */
+                else {
+                    id = data.substring(index_PIPDcomma + 5, index_comma).toInt();
+                    if (id < 0 || id > 4) {
+                        return 0;
+                    }
+                    len = data.substring(index_comma + 1, index_comma2).toInt();
+                    if (len <= 0) {
+                        return 0;
+                    }
+                    m_remoteIP = data.substring(index_comma2 + 1, index_comma3);
+                }
+                
                 has_data = true;
                 break;
             }
@@ -421,7 +449,7 @@ uint32_t ESP8266::recvPkg(uint8_t *buffer, uint32_t buffer_size, uint32_t *data_
                 if (data_len) {
                     *data_len = len;    
                 }
-                if (index_comma != -1 && coming_mux_id) {
+                if (id != -1 && coming_mux_id) {
                     *coming_mux_id = id;
                 }
                 return ret;
