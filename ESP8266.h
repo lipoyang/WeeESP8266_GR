@@ -189,13 +189,6 @@ class ESP8266 {
     String getLocalIP(void);
     
     /**
-     * Get the IP address of the last remote host. 
-     *
-     * @return the IP address.
-     */
-    String getRemoteIP(void);
-    
-    /**
      * Enable IP MUX(multiple connection mode). 
      *
      * In multiple connection mode, a couple of TCP and UDP communication can be builded. 
@@ -367,7 +360,7 @@ class ESP8266 {
      * @retval true - success.
      * @retval false - failure.
      */
-    bool send(const uint8_t *buffer, uint32_t len, String addr = "",  uint32_t port = 0);
+    bool send(const uint8_t *buffer, uint32_t len);
             
     /**
      * Send data based on one of TCP or UDP builded already in multiple mode. 
@@ -440,15 +433,6 @@ class ESP8266 {
      * @return 1 : data is available, 0 : data is not available
      */
     int dataAvailable(void);
-    
-    /**
-     * Send AT command.
-     * 
-     * @param command - AT command
-     * @retval true - success.
-     * @retval false - failure.
-     */
-    bool sendAT(String command, uint32_t timeout = 1000);
 
  private:
 
@@ -512,7 +496,7 @@ class ESP8266 {
     bool sATCIPSTARTSingle(String type, String addr, uint32_t port);
     bool sATCIPSTARTSingle(String type, String addr, uint32_t port, uint32_t my_port);
     bool sATCIPSTARTMultiple(uint8_t mux_id, String type, String addr, uint32_t port);
-    bool sATCIPSENDSingle(const uint8_t *buffer, uint32_t len, String addr, uint32_t port);
+    bool sATCIPSENDSingle(const uint8_t *buffer, uint32_t len);
     bool sATCIPSENDMultiple(uint8_t mux_id, const uint8_t *buffer, uint32_t len);
     bool sATCIPSENDSingle(String &str);
     bool sATCIPSENDMultiple(uint8_t mux_id, String &str);    
@@ -534,8 +518,6 @@ class ESP8266 {
     HardwareSerial *m_puart; /* The UART to communicate with ESP8266 */
 #endif
     uint32_t m_baud;
-    
-    String m_remoteIP;
 };
 
 #endif /* #ifndef __ESP8266_H__ */
